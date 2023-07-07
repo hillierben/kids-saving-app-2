@@ -4,7 +4,8 @@ import TokenContext from '../contexts/Token'
 import { useContext } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import Moment from 'react-moment';
-import { Button, Popconfirm } from "antd";
+import { Button, Popconfirm, Input } from "antd";
+import styles from "../App.css"
 
 const Tasks = () => {
     const navigate = useNavigate()
@@ -15,6 +16,8 @@ const Tasks = () => {
         })
     const[selectedTask, setSelectedTask] = useState()
     const[editContent, setEditContent] = useState({})
+    const[completeID, setCompleteID] = useState()
+    const[deleteID, setDeleteID] = useState()
 
 
     const{ token, setUser, setToken, user } = useContext(TokenContext)
@@ -62,8 +65,8 @@ const Tasks = () => {
         }
     }
 
-    let deleteTask = async (e) => {
-        let taskDelete = e.target.value
+    let deleteTask = async () => {
+        let taskDelete = deleteID
         let response = await fetch(`http://127.0.0.1:8000/api/edit-task/${taskDelete}/`, {
             method: "POST",
             headers: {
@@ -93,8 +96,8 @@ const Tasks = () => {
         }
 
     function handleDelete(e) {
-        e.preventDefault()      
-        deleteTask(e)
+        e.preventDefault()    
+        deleteTask()
     }
 
     function handleEditButton(e) {
@@ -152,7 +155,7 @@ const Tasks = () => {
     }
 
     function handleComplete(e) {
-        alert(e.target.delete)
+        alert(completeID)
     }
 
     useEffect(() => {
@@ -194,9 +197,13 @@ const Tasks = () => {
                             : <p>{task.task} £{task.amount}</p>}
                         
                         {Number(selectedTask) === Number(task.id) ? <p></p> : <button name="edit" value={task.id} onClick={e => {handleEditButton(e)}}>Edit</button>}
-                        <button name="delete" value={task.id} onClick={e => handleDelete(e)}>Delete</button>
-                        <Popconfirm title="Are you sure you want to delete this task?" onConfirm={e=>handleComplete(e)}>
-                            <Button type="primary" danger size='small' value={task.id} name='delete'>Delete</Button>
+                        
+                        <Popconfirm title="Are you sure you want to delete this task?" onConfirm={handleDelete}>
+                            <button name="delete" value={task.id} onClick={() => setDeleteID(task.id)}>Delete</button>
+                        </Popconfirm>
+                        
+                        <Popconfirm title="Are you sure you want to complete this task?" onConfirm={handleComplete}>
+                            <button type="submit" name="delete" value={task.id} onClick={()=>setCompleteID(task.id)}>Complete</button>
                         </Popconfirm>
                     </li>
                 ))}
