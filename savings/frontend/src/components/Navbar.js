@@ -4,7 +4,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 import MenuListData from "./MenuListData";
 import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import TokenContext from "../contexts/Token";
 
@@ -13,6 +13,8 @@ const Navbar = (props) => {
     const[menuClick, setMenuClick] = React.useState(false);
     const[showSidebar, setShowSidebar] = React.useState("hide");
     const{token, setToken, user, setUser} = useContext(TokenContext);
+
+    const navigate = useNavigate()
 
     function handleLogout() {
         // // fetch('http://127.0.0.1:8000/api/logout/', {
@@ -28,8 +30,10 @@ const Navbar = (props) => {
         setToken(null)
         localStorage.removeItem("userName")
         localStorage.removeItem("userEmail")
+        localStorage.removeItem("token")
         alert("You have been logged out")
-        return <Navigate to="/login"/>
+        return navigate("/login")
+  
     }
     
     React.useEffect(() => {

@@ -10,9 +10,9 @@ const ParentPortal = () => {
 
   return (
     <div className="portal-main-page">
-      { user === null ? <Navigate to="/login"/> : 
+      { parentLogged === null ? <Navigate to="/login"/> : 
       <h1 className='portal-hello'>Hello, {parentLogged}!</h1> }
-      {user === null ? <Navigate to="/login"/> : <Tasks/> }
+      { parentLogged === null ? <Navigate to="/login"/> : <Tasks/> }
     </div>
   )
 }

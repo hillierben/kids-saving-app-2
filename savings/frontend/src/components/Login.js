@@ -43,6 +43,7 @@ const Login = (props) => {
       setUser(jwt_decode(data.access).name);
       localStorage.setItem("userName", jwt_decode(data.access).name)
       localStorage.setItem("userEmail", jwt_decode(data.access).email)
+      localStorage.setItem("token", data.access)
       navigate("/portal");
     } else {
       alert("Invalid Login")

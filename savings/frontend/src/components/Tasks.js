@@ -3,9 +3,8 @@ import { useState, useEffect } from 'react'
 import TokenContext from '../contexts/Token'
 import { useContext } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
-import Moment from 'react-moment';
-import { Button, Popconfirm, Input } from "antd";
-import styles from "../App.css"
+import CompleteTask from './subComponents/CompleteTask'
+import DeleteTask from './subComponents/DeleteTask'
 
 const Tasks = () => {
     const navigate = useNavigate()
@@ -16,9 +15,6 @@ const Tasks = () => {
         })
     const[selectedTask, setSelectedTask] = useState()
     const[editContent, setEditContent] = useState({})
-    const[completeID, setCompleteID] = useState()
-    const[deleteID, setDeleteID] = useState()
-
 
     const{ token, setUser, setToken, user } = useContext(TokenContext)
 
@@ -27,7 +23,7 @@ const Tasks = () => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + String(token.access)
+                "Authorization": "Bearer " + String(localStorage.getItem("token"))
             }
         })
         let data = await response.json()
@@ -47,7 +43,7 @@ const Tasks = () => {
             method: "POST",
             headers:{
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + String(token.access)
+                "Authorization": "Bearer " + String(localStorage.getItem("token"))
             },
             body: JSON.stringify({
                 "task": formData.task,
@@ -65,18 +61,7 @@ const Tasks = () => {
         }
     }
 
-    let deleteTask = async () => {
-        let taskDelete = deleteID
-        let response = await fetch(`http://127.0.0.1:8000/api/edit-task/${taskDelete}/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token.access
-            }
-        })
-        let data = await response.json()
-        getTasks()
-    }
+
 
 
     // HANDLE FUNCTIONS
@@ -95,11 +80,6 @@ const Tasks = () => {
         }))
         }
 
-    function handleDelete(e) {
-        e.preventDefault()    
-        deleteTask()
-    }
-
     function handleEditButton(e) {
         e.preventDefault()
         setSelectedTask(e.target.value)
@@ -110,7 +90,7 @@ const Tasks = () => {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer " + token.access,
+                    "Authorization": "Bearer " + localStorage.getItem("token"),
                 }
             })
             let data = await response.json()
@@ -128,7 +108,7 @@ const Tasks = () => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer " + token.access,
+                    "Authorization": "Bearer " + localStorage.getItem("token"),
                 },
                 body: JSON.stringify({
                     "id": e.target.id.value,
@@ -154,22 +134,21 @@ const Tasks = () => {
         }))
     }
 
-    function handleComplete(e) {
-        alert(completeID)
-    }
-
     useEffect(() => {
         getTasks()
     }, [])
-
     
     const taskList = () => {
+
         return (
-            <ul>
+            <ul className='portal-list'>
                 {tasks.map(task => (
-                    <li key={task.id}>
+                    <li key={task.id}  >
                         {Number(selectedTask) === Number(task.id) ? 
-                             <form id="editForm" onSubmit={e => handleEdit(e)}>
+                             <form 
+                                id="editForm" 
+                                onSubmit={e => handleEdit(e)}
+                                className='portal-form'>
                              <input 
                                  type="text" 
                                  name="task"
@@ -177,6 +156,7 @@ const Tasks = () => {
                                  onChange={handleEditing}
                                  required
                                  placeholder='Task'
+                                 className='form-control portal-input'
                              />
                              <input 
                                  type="number" 
@@ -186,25 +166,36 @@ const Tasks = () => {
                                  onChange={handleEditing}
                                  required
                                  placeholder='Amount(£0.00)'
+                                 className='form-control portal-input'
                              />
                              <input hidden name="id" value={task.id} readOnly/>
                              <input hidden name="created" value={task.created} readOnly/>
                              <input hidden name="complete" value={task.complete}readOnly/>
                              <input hidden name="user" value={task.user} readOnly/>
-                             <button type="submit" name="edit" value={task.id}>Save</button>
+                             <button 
+                                type="submit" 
+                                name="edit" 
+                                value={task.id}
+                                className='btn btn-info btn-margin btn-sm'
+                                >Save
+                            </button>
                          </form>
                             // : <p>{task.task} £{task.amount} <Moment format="hh:mm : DD/MM/YY" withTitle date={task.created}/></p>}
-                            : <p>{task.task} £{task.amount}</p>}
+                            : <p className={task.complete ? "strike" : ""}>
+                                    {task.task} £{task.amount}
+                                </p>}
                         
-                        {Number(selectedTask) === Number(task.id) ? <p></p> : <button name="edit" value={task.id} onClick={e => {handleEditButton(e)}}>Edit</button>}
-                        
-                        <Popconfirm title="Are you sure you want to delete this task?" onConfirm={handleDelete}>
-                            <button name="delete" value={task.id} onClick={() => setDeleteID(task.id)}>Delete</button>
-                        </Popconfirm>
-                        
-                        <Popconfirm title="Are you sure you want to complete this task?" onConfirm={handleComplete}>
-                            <button type="submit" name="delete" value={task.id} onClick={()=>setCompleteID(task.id)}>Complete</button>
-                        </Popconfirm>
+                        {Number(selectedTask) === Number(task.id) ? <p></p> : task.complete == false ?
+                             <button 
+                                name="edit" 
+                                value={task.id} 
+                                onClick={e => {handleEditButton(e)}}
+                                className='btn btn-light btn-sm btn-margin '
+                                >Edit
+                            </button> : <p></p>}
+                        <DeleteTask token={token} taskID={task.id} getTasks={getTasks}/>
+                        <CompleteTask task={task} getTasks={()=>getTasks()}/>
+                        <div className='linebreak'></div>
                     </li>
                 ))}
             </ul>
@@ -215,7 +206,7 @@ const Tasks = () => {
         <div>
             <div className='portal-addtask'>
             <h1>Add Task Here</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='portal-form'>
                 <input 
                     type="text" 
                     name="task"
@@ -223,6 +214,7 @@ const Tasks = () => {
                     onChange={handleChange}
                     required
                     placeholder='Task'
+                    className='form-control portal-input'
                 />
                 <input 
                     type="number" 
@@ -232,8 +224,9 @@ const Tasks = () => {
                     onChange={handleChange}
                     required
                     placeholder='Amount(£0.00)'
+                    className='form-control portal-input'
                 />
-                <button type="submit">Add Task</button>
+                <button type="submit" className='btn btn-light btn-sm btn-margin'>Add Task</button>
             </form>
         </div>
         <div className="portal-tasklist">
