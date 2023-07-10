@@ -3,6 +3,11 @@ import { useState } from 'react'
 import { Popconfirm } from 'antd'
 import { useContext } from 'react'
 import TokenContext from '../../contexts/Token'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquareCheck } from '@fortawesome/free-solid-svg-icons'
+
+
+
 
 const CompleteTask = ({task, getTasks}) => {
     const[completeID, setCompleteID] = useState()
@@ -44,14 +49,15 @@ const CompleteTask = ({task, getTasks}) => {
     return (
         <>
             <Popconfirm title="Are you sure you want to complete this task?" onConfirm={handleComplete}>
-                <button
+                <FontAwesomeIcon icon={faSquareCheck} className='fa-2x icon-margin' style={{color: "#333333",}} onClick={()=>setCompleteID(task.id)} />
+                {/* <button
                     type="submit"
                     name="delete"
                     value={task.id}
                     onClick={()=>setCompleteID(task.id)}
                     className='btn btn-success btn-sm btn-margin'
                     >Complete
-                </button>
+                </button> */}
             </Popconfirm>
         </>
     )

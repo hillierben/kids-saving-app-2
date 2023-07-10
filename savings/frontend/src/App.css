@@ -97,6 +97,10 @@
   margin-right: 100px;
 }
 
+.icon-margin {
+  margin: 10px;
+}
+
 .icon-fa-bar {
   position:absolute;
   left: 40px;

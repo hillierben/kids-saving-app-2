@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
 import { Popconfirm } from 'antd'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const DeleteTask = (props) => {
     const[deleteID, setDeleteID] = useState()
@@ -30,13 +32,14 @@ const DeleteTask = (props) => {
     return (
         <>
             <Popconfirm title="Are you sure you want to delete this task?" onConfirm={handleDelete} style={{POP_STYLE}}>
-                <button 
+            <FontAwesomeIcon icon={faTrash} className='fa-2x icon-margin' name="delete" onClick={() => setDeleteID(props.taskID)}/>
+                {/* <button 
                     name="delete" 
                     value={props.taskId} 
                     onClick={() => setDeleteID(props.taskID)}
                     className='btn btn-danger btn-sm btn-margin'
                     >Delete
-                </button>
+                </button> */}
             </Popconfirm>
         </>
     )

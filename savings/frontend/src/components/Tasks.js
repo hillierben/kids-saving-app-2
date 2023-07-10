@@ -5,6 +5,8 @@ import { useContext } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import CompleteTask from './subComponents/CompleteTask'
 import DeleteTask from './subComponents/DeleteTask'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 const Tasks = () => {
     const navigate = useNavigate()
@@ -80,13 +82,13 @@ const Tasks = () => {
         }))
         }
 
-    function handleEditButton(e) {
-        e.preventDefault()
-        setSelectedTask(e.target.value)
+    function handleEditButton(id) {
+        // e.preventDefault()
+        setSelectedTask(id)
         
         // Fetch data for specific task
         let getSingleTask = async() => {
-            let response = await fetch(`http://127.0.0.1:8000/api/get-single-task/${e.target.value}/`, {
+            let response = await fetch(`http://127.0.0.1:8000/api/get-single-task/${id}/`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -186,13 +188,15 @@ const Tasks = () => {
                                 </p>}
                         
                         {Number(selectedTask) === Number(task.id) ? <p></p> : task.complete == false ?
-                             <button 
-                                name="edit" 
-                                value={task.id} 
-                                onClick={e => {handleEditButton(e)}}
-                                className='btn btn-light btn-sm btn-margin '
-                                >Edit
-                            </button> : <p></p>}
+                             <FontAwesomeIcon icon={faPenToSquare} className='fa-2x icon-margin' onClick={() => {handleEditButton(task.id)}} value={task.id} name="edit" />
+                            //  <button 
+                            //     name="edit" 
+                            //     value={task.id} 
+                            //     onClick={e => {handleEditButton(e)}}
+                            //     className='btn btn-light btn-sm btn-margin '
+                            //     >Edit
+                            // </button> 
+                            : <p></p>}
                         <DeleteTask token={token} taskID={task.id} getTasks={getTasks}/>
                         <CompleteTask task={task} getTasks={()=>getTasks()}/>
                         <div className='linebreak'></div>
