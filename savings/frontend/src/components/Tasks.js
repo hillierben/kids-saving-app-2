@@ -145,7 +145,7 @@ const Tasks = () => {
         return (
             <ul className='portal-list'>
                 {tasks.map(task => (
-                    <li key={task.id}  >
+                    <li key={task.id}  className='shadow-md bg-slate-50 mb-2 p-2 w-auto max-w-xl min-w-min rounded-lg flex group hover:bg-[#40c6b8]/[.3] md:align-middle '>
                         {Number(selectedTask) === Number(task.id) ? 
                              <form 
                                 id="editForm" 
@@ -178,28 +178,31 @@ const Tasks = () => {
                                 type="submit" 
                                 name="edit" 
                                 value={task.id}
-                                className='btn btn-info btn-margin btn-sm'
+                                className='px-2 shadow-sm border rounded-lg bg-yellow-300'
                                 >Save
                             </button>
                          </form>
-                            // : <p>{task.task} £{task.amount} <Moment format="hh:mm : DD/MM/YY" withTitle date={task.created}/></p>}
-                            : <p className={task.complete ? "strike" : ""}>
-                                    {task.task} £{task.amount}
-                                </p>}
-                        
-                        {Number(selectedTask) === Number(task.id) ? <p></p> : task.complete == false ?
-                             <FontAwesomeIcon icon={faPenToSquare} className='fa-2x icon-margin' onClick={() => {handleEditButton(task.id)}} value={task.id} name="edit" />
-                            //  <button 
-                            //     name="edit" 
-                            //     value={task.id} 
-                            //     onClick={e => {handleEditButton(e)}}
-                            //     className='btn btn-light btn-sm btn-margin '
-                            //     >Edit
-                            // </button> 
-                            : <p></p>}
-                        <DeleteTask token={token} taskID={task.id} getTasks={getTasks}/>
-                        <CompleteTask task={task} getTasks={()=>getTasks()}/>
-                        <div className='linebreak'></div>
+                        : 
+                        <section className='flex flex-wrap sm:justify-center'>
+                            <div className='flex flex-nowrap'>
+                                <div className=' rounded-md m-2 flex items-center '>
+                                    <input className={task.complete ? "portal-strike flex py-2 px-2 rounded-md bg-slate-50" : "flex py-2 px-2 rounded-md bg-slate-50"} name="id" value={task.task} readOnly/>
+                                </div>
+                                <div className=' rounded-md m-2 px-1  flex items-center '>
+                                    <input className={task.complete ? "portal-strike py-2 px-2 rounded-md w-20 bg-slate-50" : "py-2 px-2 rounded-md w-20 bg-slate-50"} name="id" value={`£${task.amount}`} readOnly/>
+                                </div>
+                            </div>
+                            <div className=' group-hover:flex  pt-[6px] hidden space-x-3 max-[500px]:ml-[26%] '>
+                                {Number(selectedTask) === Number(task.id) ? <p></p> : task.complete == false ?
+                                    <FontAwesomeIcon icon={faPenToSquare} className='fa-2x icon-margin' onClick={() => {handleEditButton(task.id)}} value={task.id} name="edit" />
+                                    : <p></p>}
+                                <DeleteTask token={token} taskID={task.id} getTasks={getTasks}/>
+                                <CompleteTask task={task} getTasks={()=>getTasks()}/>
+                            </div>
+                        </section>
+                        }
+                        <div>
+                        </div>
                     </li>
                 ))}
             </ul>
@@ -207,8 +210,8 @@ const Tasks = () => {
     }
 
     return (
-        <div>
-            <div className='portal-addtask'>
+        <div >
+            <div className='m-auto w-5/6 rounded-lg  p-2 my-2'>
             <h1>Add Task Here</h1>
             <form onSubmit={handleSubmit} className='portal-form'>
                 <input 
@@ -227,13 +230,13 @@ const Tasks = () => {
                     value={formData.amount}
                     onChange={handleChange}
                     required
-                    placeholder='Amount(£0.00)'
-                    className='form-control portal-input'
+                    placeholder='Amount(£)'
+                    className='form-control portal-input-amount'
                 />
-                <button type="submit" className='btn btn-light btn-sm btn-margin'>Add Task</button>
+                <button type="submit" className='btn btn-light btn-sm btn-margin px-3 border'>Add Task</button>
             </form>
         </div>
-        <div className="portal-tasklist">
+        <div className='m-auto w-5/6 rounded-lg p-2 my-2'>
             <h1>Tasks</h1>
             {taskList()}
         </div>

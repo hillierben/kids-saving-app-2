@@ -17,15 +17,6 @@ const Navbar = (props) => {
     const navigate = useNavigate()
 
     function handleLogout() {
-        // // fetch('http://127.0.0.1:8000/api/logout/', {
-        // // method: 'GET',
-        // // headers: {
-        // //   "Content-type": "application/json; charset=UTF-8",
-        //   //'X-CSRFToken': token,
-        // // },
-        // // })
-        // // props.handlePage("login")
-        // // Clear Context variables and local storage
         setUser(null)
         setToken(null)
         localStorage.removeItem("userName")

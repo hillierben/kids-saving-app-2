@@ -1,3 +1,7 @@
+* {
+  font-family: 'Rowdies', cursive;
+}
+
 .App {
   text-align: center;
 }
@@ -98,7 +102,7 @@
 }
 
 .icon-margin {
-  margin: 10px;
+  margin: 3px;
 }
 
 .icon-fa-bar {
@@ -167,6 +171,7 @@
   background: linear-gradient(#22a699, rgb(53, 207, 215));
   position: fixed;
   justify-content: space-evenly;
+  z-index: 2;
 }
 
 .nav-list {
@@ -222,6 +227,7 @@
   margin-right: auto;
   margin-top: 10px;
   margin-bottom: 10px;
+  font-family: 'Rowdies', cursive;
 }
 
 .portal-hello {
@@ -234,6 +240,7 @@
   margin-right: auto;
   margin-top: 0;
   margin-bottom: 0;
+  font-family: 'Rowdies', cursive;
 }
 
 .portal-form {
@@ -242,8 +249,15 @@
 }
 
 .portal-input {
-  max-width: 300px;
+  max-width: 250px;
   margin-right: 5px;
+  font-family: 'Rowdies', cursive;
+}
+
+.portal-input-amount {
+  max-width: 230px;
+  margin-right: 5px;
+  font-family: 'Rowdies', cursive;
 }
 
 
@@ -258,11 +272,13 @@
 }
 
 .portal-list {
-  padding: 10px;
   list-style: none;
-  border: solid;
   border-radius: 10px;
-  margin: 5px;
+  margin-left: -23px;
+}
+
+.portal-listy {
+  display: flex;
 }
 
 .portal-tasklist {
@@ -274,6 +290,10 @@
   margin-right: auto;
   margin-top: 10px;
   margin-bottom: 0;
+}
+
+.portal-strike {
+  text-decoration: line-through;
 }
 
 .rf-child-input {
@@ -414,7 +434,7 @@
   background: linear-gradient(-45deg, #22a699, rgb(53, 207, 215));
   padding-top: 100px;
   margin-left: 0;
-  z-index: -1;
+  z-index: 0;
 }
 
 .sidebar-div-hidden {
@@ -460,7 +480,5 @@ transition: transform 0.5s;
   color: white
 }
 
-.strike {
-  text-decoration: line-through;
-}
+
 
