@@ -143,9 +143,9 @@ const Tasks = () => {
     const taskList = () => {
 
         return (
-            <ul className='portal-list'>
+            <ul className='portal-list max-h-[26rem] overflow-scroll shadow-sm'>
                 {tasks.map(task => (
-                    <li key={task.id}  className='shadow-md bg-slate-50 mb-2 p-2 w-auto max-w-xl min-w-min rounded-lg flex group hover:bg-[#40c6b8]/[.3] md:align-middle '>
+                    <li key={task.id}  className='shadow-md bg-slate-50 mb-2 p-2 w-auto max-w-xl min-w-min rounded-lg flex group hover:bg-[#40c6b8]/[.3]  '>
                         {Number(selectedTask) === Number(task.id) ? 
                              <form 
                                 id="editForm" 
@@ -183,7 +183,7 @@ const Tasks = () => {
                             </button>
                          </form>
                         : 
-                        <section className='flex flex-wrap sm:justify-center'>
+                        <section className='flex flex-wrap'>
                             <div className='flex flex-nowrap'>
                                 <div className=' rounded-md m-2 flex items-center '>
                                     <input className={task.complete ? "portal-strike flex py-2 px-2 rounded-md bg-slate-50" : "flex py-2 px-2 rounded-md bg-slate-50"} name="id" value={task.task} readOnly/>
@@ -192,7 +192,7 @@ const Tasks = () => {
                                     <input className={task.complete ? "portal-strike py-2 px-2 rounded-md w-20 bg-slate-50" : "py-2 px-2 rounded-md w-20 bg-slate-50"} name="id" value={`£${task.amount}`} readOnly/>
                                 </div>
                             </div>
-                            <div className=' group-hover:flex  pt-[6px] hidden space-x-3 max-[500px]:ml-[26%] '>
+                            <div className=' group-hover:flex  pt-[6px] hidden space-x-3 max-md:ml-[3%]  '>
                                 {Number(selectedTask) === Number(task.id) ? <p></p> : task.complete == false ?
                                     <FontAwesomeIcon icon={faPenToSquare} className='fa-2x icon-margin' onClick={() => {handleEditButton(task.id)}} value={task.id} name="edit" />
                                     : <p></p>}
@@ -211,8 +211,8 @@ const Tasks = () => {
 
     return (
         <div >
-            <div className='m-auto w-5/6 rounded-lg  p-2 my-2'>
-            <h1>Add Task Here</h1>
+            <div className='m-auto w-5/6 rounded-lg  p-2 my-4'>
+            <h1 className='text-2xl'>Add Task Here</h1>
             <form onSubmit={handleSubmit} className='portal-form'>
                 <input 
                     type="text" 
@@ -233,11 +233,11 @@ const Tasks = () => {
                     placeholder='Amount(£)'
                     className='form-control portal-input-amount'
                 />
-                <button type="submit" className='btn btn-light btn-sm btn-margin px-3 border'>Add Task</button>
+                <button type="submit" className=' rounded-md bg-slate-50  px-3 border hover:bg-[#40c6b8]/[.3]'>Add Task</button>
             </form>
         </div>
         <div className='m-auto w-5/6 rounded-lg p-2 my-2'>
-            <h1>Tasks</h1>
+            <h1 className='text-2xl'>Tasks</h1>
             {taskList()}
         </div>
         </div>
