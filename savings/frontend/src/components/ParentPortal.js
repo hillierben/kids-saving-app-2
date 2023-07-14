@@ -3,6 +3,8 @@ import TokenContext from '../contexts/Token'
 import { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
 import Tasks from './Tasks'
+import Popup from './subComponents/Popup'
+
 
 const ParentPortal = () => {
   const{user} = useContext(TokenContext)

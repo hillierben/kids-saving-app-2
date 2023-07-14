@@ -5,6 +5,7 @@ import { useContext } from 'react'
 import TokenContext from '../../contexts/Token'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareCheck } from '@fortawesome/free-solid-svg-icons'
+import Popup from './Popup'
 
 
 
@@ -13,6 +14,7 @@ const CompleteTask = ({task, getTasks}) => {
     const[completeID, setCompleteID] = useState()
     const{token} = useContext(TokenContext)
     const[complete, setComplete] = useState()
+    const[isOpen, setIsOpen] = React.useState(false)
 
     function handleComplete(e) {
         let completeTask = async (e)=>{
@@ -42,9 +44,17 @@ const CompleteTask = ({task, getTasks}) => {
 
     return (
         <>
-            <Popconfirm title="Are you sure you want to complete this task?" onConfirm={handleComplete} >
-                <FontAwesomeIcon icon={faSquareCheck} className='fa-2x icon-margin' style={{color: "#333333",}} onClick={()=>{setCompleteID(task.id); setComplete(!task.complete)}} />
-            </Popconfirm>
+            <Popup isOpen={isOpen} close={() => setIsOpen(false)} handle={handleComplete}>
+                Are you sure you want to complete this task?
+            </Popup>
+            <FontAwesomeIcon 
+                icon={faSquareCheck} 
+                className='icon-margin' 
+                size="xl"
+                style={{color: "#333333",}} 
+                onClick={()=>{setCompleteID(task.id); 
+                    setComplete(!task.complete); 
+                    setIsOpen(true)}} />
         </>
     )
 }

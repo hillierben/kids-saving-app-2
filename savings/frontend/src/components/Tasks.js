@@ -143,7 +143,7 @@ const Tasks = () => {
     const taskList = () => {
 
         return (
-            <ul className='portal-list max-h-[26rem] overflow-scroll shadow-sm'>
+            <ul className='portal-list max-h-[26rem] overflow-scroll shadow-sm min-w-[355px]'>
                 {tasks.map(task => (
                     <li key={task.id}  className='shadow-md bg-slate-50 mb-2 p-2 w-auto max-w-xl min-w-min rounded-lg flex group hover:bg-[#40c6b8]/[.3]  '>
                         {Number(selectedTask) === Number(task.id) ? 
@@ -194,7 +194,11 @@ const Tasks = () => {
                             </div>
                             <div className=' group-hover:flex  pt-[6px] hidden space-x-3 max-md:ml-[3%]  '>
                                 {Number(selectedTask) === Number(task.id) ? <p></p> : task.complete == false ?
-                                    <FontAwesomeIcon icon={faPenToSquare} className='fa-2x icon-margin' onClick={() => {handleEditButton(task.id)}} value={task.id} name="edit" />
+                                    <FontAwesomeIcon 
+                                        icon={faPenToSquare} 
+                                        className='icon-margin' 
+                                        size="xl"
+                                        onClick={() => {handleEditButton(task.id)}} value={task.id} name="edit" />
                                     : <p></p>}
                                 <DeleteTask token={token} taskID={task.id} getTasks={getTasks}/>
                                 <CompleteTask task={task} getTasks={()=>getTasks()}/>
@@ -213,7 +217,7 @@ const Tasks = () => {
         <div >
             <div className='m-auto w-5/6 rounded-lg  p-2 my-4'>
             <h1 className='text-2xl'>Add Task Here</h1>
-            <form onSubmit={handleSubmit} className='portal-form'>
+            <form onSubmit={handleSubmit} className='portal-form min-w-[355px]'>
                 <input 
                     type="text" 
                     name="task"

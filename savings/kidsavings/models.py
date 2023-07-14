@@ -10,6 +10,10 @@ class User(AbstractUser):
     parent_account = models.BooleanField(default=True)
 
 
+
+
+
+
 class Task(models.Model):
     task = models.CharField(max_length=200)
     amount = models.DecimalField(decimal_places=2, default=0.00, max_digits=6)
