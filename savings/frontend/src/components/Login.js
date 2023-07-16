@@ -68,7 +68,7 @@ const Login = (props) => {
           <p>{props.loggedOut}</p>
           <h2>Login</h2>
           <input
-            placeholder="Email"
+            placeholder="Email/Username"
             className="rf-input rf-parent-name"
             type="text"
             id="email"

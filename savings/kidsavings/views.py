@@ -13,7 +13,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.parsers import JSONParser 
 
 from .serializers import UserSerializer, TaskSerializer
-from .models import User, Task
+from .models import User, Task, Child, Relationship
 
 # Create your views here.
 
@@ -55,10 +55,43 @@ def registerParent(request):
 
         # Attempt to create new user
         try:
-            user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name, last_name=last_name)
+            user = User.objects.create_user(
+                username=username, 
+                email=email, 
+                password=password, 
+                first_name=first_name, 
+                last_name=last_name)
             user.save()
         except:
             pass
+
+    return Response("Successfully Registered")
+
+
+@api_view(["POST"])
+def registerChild(request):
+    if request.method == "POST":
+        username = request.data["username"]
+        firstName = request.data["firstName"]
+        lastName = request.data["lastName"]
+        password = request.data["password"]
+
+    try:
+        user = Child.objects.create_user(
+            username=username, 
+            email=f"{username}@gmail.com", 
+            password=password, 
+            first_name=firstName, 
+            last_name=lastName,
+        )
+        user.save()
+
+        child = Child.objects.get(username=username)
+
+        Relationship.objects.create(parent=request.user, child=child)
+        
+    except:
+        pass
 
     return Response("Successfully Registered")
 

@@ -99,41 +99,7 @@ const Register = (props) => {
               onChange={handleChange}
               required/>
             <button className='rf-submit'>Register</button>
-          </div>
-
-          {/* <div className="rf-child-input">
-            <h2 className="rf-child-heading">Child Details</h2>
-            <input 
-              placeholder="Child Name"
-              className="rf-input rf-child-name"
-              type="text"
-              id="child-name"
-              name="childName"
-              value={formData.childName}
-              onChange={handleChange}/>
-            <input 
-              placeholder="Child Username"
-              className="rf-input rf-child-username"
-              type="text"
-              id="child-username"
-              name="childUsername"
-              value={formData.childUsername}
-              onChange={handleChange}/>
-            <input 
-              placeholder="Child Password"
-              className="rf-input rf-child-password"
-              type="password"
-              id="child-password"
-              name="childPassword"
-              value={formData.childPassword}
-              onChange={handleChange}/>
-            <input 
-              placeholder="Confirm Password"
-              className="rf-input rf-child-confirm-password"
-              type="password"/>
-          </div> */}
-      
-
+          </div>      
     </form>
     </div>
   )

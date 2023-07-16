@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import TokenContext from '../contexts/Token'
 import { useContext } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import CompleteTask from './subComponents/CompleteTask'
 import DeleteTask from './subComponents/DeleteTask'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -145,7 +145,7 @@ const Tasks = () => {
         return (
             <ul className='portal-list max-h-[26rem] overflow-scroll shadow-sm min-w-[355px]'>
                 {tasks.map(task => (
-                    <li key={task.id}  className='shadow-md bg-slate-50 mb-2 p-2 w-auto max-w-xl min-w-min rounded-lg flex group hover:bg-[#40c6b8]/[.3]  '>
+                    <li key={task.id}  className='shadow-md bg-slate-50 mb-2 p-2 w-auto max-w-xl min-w-min rounded-lg flex group hover:bg-[#40c6b8]  '>
                         {Number(selectedTask) === Number(task.id) ? 
                              <form 
                                 id="editForm" 
@@ -192,7 +192,7 @@ const Tasks = () => {
                                     <input className={task.complete ? "portal-strike py-2 px-2 rounded-md w-20 bg-slate-50" : "py-2 px-2 rounded-md w-20 bg-slate-50"} name="id" value={`£${task.amount}`} readOnly/>
                                 </div>
                             </div>
-                            <div className=' group-hover:flex  pt-[6px] hidden space-x-3 max-md:ml-[3%]  '>
+                            <div className=' group-hover:flex  pt-[12px] hidden space-x-3 max-md:ml-[3%]  '>
                                 {Number(selectedTask) === Number(task.id) ? <p></p> : task.complete == false ?
                                     <FontAwesomeIcon 
                                         icon={faPenToSquare} 
@@ -237,7 +237,7 @@ const Tasks = () => {
                     placeholder='Amount(£)'
                     className='form-control portal-input-amount'
                 />
-                <button type="submit" className=' rounded-md bg-slate-50  px-3 border hover:bg-[#40c6b8]/[.3]'>Add Task</button>
+                <button type="submit" className=' rounded-md bg-slate-50  px-3 border hover:bg-[#40c6b8]'>Add Task</button>
             </form>
         </div>
         <div className='m-auto w-5/6 rounded-lg p-2 my-2'>

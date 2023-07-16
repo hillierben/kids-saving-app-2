@@ -2,6 +2,10 @@
   font-family: 'Rowdies', cursive;
 }
 
+body {
+  background-color: linear-gradient(#CF9FFF, black);
+}
+
 .App {
   text-align: center;
 }
@@ -298,7 +302,6 @@
 }
 
 .rf-child-input {
-  background-color: #008ac1bb;
   height: auto;
   border-radius: 20px;
   margin: 10px;
