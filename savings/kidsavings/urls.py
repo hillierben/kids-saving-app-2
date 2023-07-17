@@ -22,4 +22,5 @@ urlpatterns = [
     path("get-single-task/<int:pk>/", views.getSingleTask, name="get-single-task"),
     path("edit-task/<int:pk>/", views.editTask, name="edit-task"),
     path("get-children/", views.getChildren, name="get-children"),
+    path("get-total/", views.getTotal, name="get-total"),
 ]

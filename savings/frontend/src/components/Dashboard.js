@@ -1,31 +1,27 @@
-import { Modal } from 'antd'
 import React from 'react'
-import Popup from './subComponents/Popup'
 import { useState } from 'react'
-import Button from './subComponents/Button'
-
-
-
+import ChildTasks from './subComponents/ChildTasks'
+import TotalSaved from './subComponents/TotalSaved'
 
 
 const Dashboard = () => {
   const[isOpen, setIsOpen] = useState(false)
 
   return (
-    <div>
-      <div className='h-24'></div>
-      <div className='grid grid-cols-4 gap-4 p-4 top-2'>
-        <div className='bg-red col-span-2'>1</div>
-        <div className='bg-red'>2</div>
-        <div className='bg-red'>3</div>
-        <div className='bg-red'>4</div>
-        <div className='bg-red'>5</div>
-        <div className='bg-red'>6</div>
-        <div className='bg-red'>7</div>
-        <div className='bg-red'>8</div>
+    <>
+     <div className='h-24 bg-slate-400'></div>
+        <div className='pb-2 pr-9 text-center bg-slate-400'>
+          <h1>Hello, {localStorage.getItem("userName")}!</h1> 
+        </div>
+      <div className='grid grid-cols-[repeat(auto-fit,minmax(380px,1fr))] bg-slate-400 border-white border-3'>
+        <div className=' border-4 w-[380px] m-2 justify-self-end max-[766px]:justify-self-center'>
+          <TotalSaved/>
+        </div>
+        <div className=' border-4 w-[380px] m-2 justify-self-start max-[766px]:justify-self-center'>
+          <ChildTasks/>
+        </div>
       </div>
-
-    </div>
+      </>
   )
 }
 

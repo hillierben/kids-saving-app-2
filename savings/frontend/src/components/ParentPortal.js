@@ -6,6 +6,7 @@ import Tasks from './Tasks'
 import AddChild from './subComponents/AddChild'
 import ChildList from './subComponents/ChildList'
 import jwt_decode from "jwt-decode";
+import TotalSaved from './subComponents/TotalSaved'
 
 
 const ParentPortal = () => {
@@ -17,22 +18,24 @@ const ParentPortal = () => {
     <div className='bg-slate-400'>
       <div className='h-24 '></div>
       { parentLogged === null ? <Navigate to="/login"/> : 
-        <div className=' w-full pl-[9%] pb-2 '>
+        <div className='pb-2 pr-9 text-center '>
           <h1>Hello, {parentLogged}!</h1> 
         </div>}
-      <div className='grid grid-cols-[repeat(auto-fill,minmax(100px,500px))] gap-2 pb-4  justify-center '>
-        <div className=''>
-          <div className='m-2 shadow bg-white'>
-            <ChildList />
+
+      <div className=''>
+        <div className='grid grid-cols-[repeat(auto-fit,minmax(380px,1fr))] justify-items-center'>
+          <div className=' bg-white border-4 m-2 w-[380px] justify-self-end max-[766px]:justify-self-center'>
+            <div className='flex flex-wrap'>
+              <ChildList />
+              <TotalSaved/>
+            </div>
+            <div className='mt-5 border-4'>
+              <AddChild />
+            </div>
           </div>
-        </div>
-        <div className='row-span-3'>
-          <div className='m-2  shadow bg-white'>
-            { parentLogged === null ? <Navigate to="/login"/> : <Tasks/> }
+          <div className='bg-white border-4 m-2 w-[380px] justify-self-start max-[766px]:justify-self-center'>
+              { parentLogged === null ? <Navigate to="/login"/> : <Tasks/> }
           </div>
-        </div>
-        <div className=' m-2 row-span-2 shadow bg-white'>
-          <AddChild />
         </div>
       </div>
     </div>

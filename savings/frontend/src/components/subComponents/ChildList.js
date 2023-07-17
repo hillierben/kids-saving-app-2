@@ -21,19 +21,6 @@ export default function ChildList() {
             setChildren(data)
         }
     }
-
-    // // let getChildTasks = async() => {
-    // //     let response = await fetch("http://127.0.0.1:8000/api/get-tasks/", {
-    // //         method: "POST",
-    // //         headers: {
-    // //             "Content-Type": "application/json",
-    // //             "Authorization": "Bearer " + localStorage.getItem("token"),
-    // //         },
-    // //         body: JSON.stringify({
-    // //             "childID": childId,
-    // //         })
-    // //     })
-    // // }
     
     useEffect(() => {
         getChildren()

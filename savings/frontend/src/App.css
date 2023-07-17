@@ -484,5 +484,17 @@ transition: transform 0.5s;
   color: white
 }
 
+.pportal {
+  display:grid;
+  border: solid red 5px;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  justify-items: center;
+}
 
-
+.dashboard {
+  background: rgb(163, 184, 205);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  justify-items: center;
+  /* grid-template-columns: 1fr 1fr; */
+}

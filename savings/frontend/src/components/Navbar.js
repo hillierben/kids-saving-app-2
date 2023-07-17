@@ -24,6 +24,7 @@ const Navbar = (props) => {
         localStorage.removeItem("userName")
         localStorage.removeItem("userEmail")
         localStorage.removeItem("token")
+        localStorage.removeItem("pageDisplay")
         alert("You have been logged out")
         return navigate("/login")
   

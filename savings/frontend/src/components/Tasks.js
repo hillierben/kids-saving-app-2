@@ -18,7 +18,7 @@ const Tasks = () => {
     const[selectedTask, setSelectedTask] = useState()
     const[editContent, setEditContent] = useState({})
 
-    const{ token, setUser, setToken, user, childId, setChildId } = useContext(TokenContext)
+    const{ token, setUser, setToken, user, childId, setChildId, setChanged } = useContext(TokenContext)
 
     let getTasks = async () => {
         let response = await fetch("http://127.0.0.1:8000/api/get-tasks/", {
@@ -34,12 +34,8 @@ const Tasks = () => {
         let data = await response.json()
         if(response.status === 200) {
             setTasks(data)
+            setChanged(prev => prev + 1)
         } else {
-            // setUser(null)
-            // setToken(null)
-            // localStorage.removeItem("userName")
-            // localStorage.removeItem("userEmail");
-            // navigate("/login")
         }
     }
 
@@ -252,7 +248,7 @@ const Tasks = () => {
                             <button type="submit" className=' rounded-md bg-slate-50 px-3 border hover:bg-[#40c6b8]'>Add Task</button>
                         </form>
                     </div>
-                    <div className='m-auto w-full rounded-lg my-2 p-1'>
+                    <div className=' w-full rounded-lg my-2 p-1 '>
                         <h1 className='text-2xl'>Tasks</h1>
                         
                         {taskList()}

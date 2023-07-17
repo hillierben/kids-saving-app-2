@@ -11,6 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.parsers import JSONParser 
+from django.db.models import Avg, Sum
 
 from .serializers import UserSerializer, TaskSerializer
 from .models import User, Task, Child, Relationship
@@ -147,8 +148,7 @@ def addTask(request):
     task = request.data["task"]
     amount = request.data["amount"]
     child = request.data["child"]
-    child_user = Child.child.get(pk=child)
-    print(f"child id type {child_user}")
+    child_user = Child.child.get(pk=child)    
 
     added_task = Task.objects.create(
         task=task, 
@@ -163,20 +163,28 @@ def addTask(request):
 @api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
 def getTasks(request):
-    try:
-        user = str(request.user) 
-        user_id = User.objects.get(email=user)
-        childID = request.data["childID"]
-        tasks = Task.objects.filter(childUser=childID)
+    if request.method == "POST":
+        try:
+            user = str(request.user) 
+            user_id = User.objects.get(email=user)
+            childID = request.data["childID"]
+            tasks = Task.objects.filter(childUser=childID)
+            serializer = TaskSerializer(tasks, many=True)
+
+            # Reverse the order of tasks, by time created
+            reversed = sorted(serializer.data, key=lambda x: x["created"], reverse=True)
+            return Response(reversed)
+        except:
+            return Response("No Tasks")
+    else:
+        user = str(request.user)
+        user_id = Child.child.get(username=user)
+        tasks = Task.objects.filter(childUser=user_id)
+
         serializer = TaskSerializer(tasks, many=True)
-
-        # Reverse the order of tasks, by time created
         reversed = sorted(serializer.data, key=lambda x: x["created"], reverse=True)
-        print(reversed)
-        return Response(reversed)
-    except:
-        return Response("No Tasks")
 
+        return Response(reversed)
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
@@ -210,6 +218,7 @@ def editTask(request, pk):
 
 
 @api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def getChildren(request):
     if request.method == "GET":
         user = str(request.user)
@@ -225,3 +234,27 @@ def getChildren(request):
             })
         return Response(data)
     return HttpResponse(404)
+
+
+@api_view(["GET", "POST"])
+@permission_classes([IsAuthenticated])
+def getTotal(request):
+    if request.method == "GET":
+        # Get current user
+        user = request.user
+        user_id = User.objects.get(username=user)
+    elif request.method == "POST":
+        user = request.data["child"] 
+
+    # Get all tasks from user, that are completed
+    try:
+        tasks = Task.objects.filter(childUser=user, complete=True)
+        # Sum 'amount' of all completed tasks
+        total_saved = round(tasks.aggregate(Sum("amount"))["amount__sum"], 2)
+        print(total_saved)
+    except TypeError:
+        total_saved = 0
+
+
+    
+    return Response(total_saved)

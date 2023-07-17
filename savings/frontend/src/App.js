@@ -20,10 +20,12 @@ function App() {
   const[user, setUser] = React.useState()
   const[role, setRole] = React.useState()
   const[childId, setChildId] = React.useState();
+  const[changed, setChanged] = React.useState(0)
 
 
   return (
-    <TokenContext.Provider value={{token, setToken, user, setUser, role, setRole, childId, setChildId}}>
+    <TokenContext.Provider value={{token, setToken, user, setUser, role, setRole, 
+                                  childId, setChildId, changed, setChanged}}>
       <BrowserRouter>
       <Navbar 
             handlePage={e => setPageSelector(e)}

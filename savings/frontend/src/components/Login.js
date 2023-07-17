@@ -46,8 +46,12 @@ const Login = (props) => {
       localStorage.setItem("token", data.access)
       setRole(jwt_decode(data.access).role)
       if(jwt_decode(data.access).role === "PARENT") {
+        localStorage.setItem("pageDisplay", "PORTAL")
+        localStorage.setItem("userProfile", "PARENT")
         navigate("/portal");
       } else if(jwt_decode(data.access).role === "CHILD") {
+        localStorage.setItem("pageDisplay", "DASHBOARD")
+        localStorage.setItem("userProfile", "CHILD")
         navigate("/dashboard")
       }
     } else {
