@@ -12,10 +12,18 @@ const Dashboard = () => {
   const[isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="dashboard-page">
-      Kids Dashboard
-      <Button name="Big Button" />
-      <button className={"btn btn-danger"}>New Button</button>
+    <div>
+      <div className='h-24'></div>
+      <div className='grid grid-cols-4 gap-4 p-4 top-2'>
+        <div className='bg-red col-span-2'>1</div>
+        <div className='bg-red'>2</div>
+        <div className='bg-red'>3</div>
+        <div className='bg-red'>4</div>
+        <div className='bg-red'>5</div>
+        <div className='bg-red'>6</div>
+        <div className='bg-red'>7</div>
+        <div className='bg-red'>8</div>
+      </div>
 
     </div>
   )

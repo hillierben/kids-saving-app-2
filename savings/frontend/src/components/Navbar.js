@@ -12,13 +12,15 @@ const Navbar = (props) => {
     const[hideLinks, setHideLinks] = React.useState("show");
     const[menuClick, setMenuClick] = React.useState(false);
     const[showSidebar, setShowSidebar] = React.useState("hide");
-    const{token, setToken, user, setUser} = useContext(TokenContext);
+    const{token, setToken, user, setUser, role, setRole, setChildId} = useContext(TokenContext);
 
     const navigate = useNavigate()
 
     function handleLogout() {
         setUser(null)
         setToken(null)
+        setRole("")
+        setChildId("")
         localStorage.removeItem("userName")
         localStorage.removeItem("userEmail")
         localStorage.removeItem("token")

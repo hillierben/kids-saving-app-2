@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import TokenContext from '../contexts/Token'
 import { useContext } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import CompleteTask from './subComponents/CompleteTask'
 import DeleteTask from './subComponents/DeleteTask'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,25 +18,28 @@ const Tasks = () => {
     const[selectedTask, setSelectedTask] = useState()
     const[editContent, setEditContent] = useState({})
 
-    const{ token, setUser, setToken, user } = useContext(TokenContext)
+    const{ token, setUser, setToken, user, childId, setChildId } = useContext(TokenContext)
 
     let getTasks = async () => {
         let response = await fetch("http://127.0.0.1:8000/api/get-tasks/", {
-            method: "GET",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + String(localStorage.getItem("token"))
-            }
+            },
+            body: JSON.stringify({
+                "childID": childId,
+            })
         })
         let data = await response.json()
         if(response.status === 200) {
             setTasks(data)
         } else {
-            setUser(null)
-            setToken(null)
-            localStorage.removeItem("userName")
-            localStorage.removeItem("userEmail");
-            navigate("/login")
+            // setUser(null)
+            // setToken(null)
+            // localStorage.removeItem("userName")
+            // localStorage.removeItem("userEmail");
+            // navigate("/login")
         }
     }
 
@@ -50,6 +53,7 @@ const Tasks = () => {
             body: JSON.stringify({
                 "task": formData.task,
                 "amount": formData.amount,
+                "child": childId,
                 // "user": user,
             })
         })
@@ -58,6 +62,7 @@ const Tasks = () => {
             setFormData({
                 task: "",
                 amount: "",
+                child: childId,
             })
             getTasks()
         }
@@ -139,13 +144,18 @@ const Tasks = () => {
     useEffect(() => {
         getTasks()
     }, [])
+
+
+    useEffect(() => {
+        getTasks()
+    }, [childId])
     
     const taskList = () => {
 
         return (
-            <ul className='portal-list max-h-[26rem] overflow-scroll shadow-sm min-w-[355px]'>
+            <ul className='portal-list max-h-[26rem] overflow-scroll shadow-sm min-w-[300px]'>
                 {tasks.map(task => (
-                    <li key={task.id}  className='shadow-md bg-slate-50 mb-2 p-2 w-auto max-w-xl min-w-min rounded-lg flex group hover:bg-[#40c6b8]/[.3]  '>
+                    <li key={task.id}  className='shadow-md bg-slate-50 mb-2 w-auto max-w-xl min-w-min rounded-lg flex group hover:bg-[#40c6b8]  '>
                         {Number(selectedTask) === Number(task.id) ? 
                              <form 
                                 id="editForm" 
@@ -192,7 +202,7 @@ const Tasks = () => {
                                     <input className={task.complete ? "portal-strike py-2 px-2 rounded-md w-20 bg-slate-50" : "py-2 px-2 rounded-md w-20 bg-slate-50"} name="id" value={`£${task.amount}`} readOnly/>
                                 </div>
                             </div>
-                            <div className=' group-hover:flex  pt-[6px] hidden space-x-3 max-md:ml-[3%]  '>
+                            <div className=' group-hover:flex  pt-[12px] hidden space-x-3 max-md:ml-[3%]  '>
                                 {Number(selectedTask) === Number(task.id) ? <p></p> : task.complete == false ?
                                     <FontAwesomeIcon 
                                         icon={faPenToSquare} 
@@ -215,35 +225,39 @@ const Tasks = () => {
 
     return (
         <div >
-            <div className='m-auto w-5/6 rounded-lg  p-2 my-4'>
-            <h1 className='text-2xl'>Add Task Here</h1>
-            <form onSubmit={handleSubmit} className='portal-form min-w-[355px]'>
-                <input 
-                    type="text" 
-                    name="task"
-                    value={formData.task}
-                    onChange={handleChange}
-                    required
-                    placeholder='Task'
-                    className='form-control portal-input'
-                />
-                <input 
-                    type="number" 
-                    name="amount"
-                    step="0.10"
-                    value={formData.amount}
-                    onChange={handleChange}
-                    required
-                    placeholder='Amount(£)'
-                    className='form-control portal-input-amount'
-                />
-                <button type="submit" className=' rounded-md bg-slate-50  px-3 border hover:bg-[#40c6b8]/[.3]'>Add Task</button>
-            </form>
-        </div>
-        <div className='m-auto w-5/6 rounded-lg p-2 my-2'>
-            <h1 className='text-2xl'>Tasks</h1>
-            {taskList()}
-        </div>
+            {tasks === "No Tasks" ? <p className='text-center'>ADD OR SELECT CHILD TO DISPLAY TASKS</p> : 
+                <>
+                    <div className='m-auto w-full rounded-lg p-1'>
+                        <h1 className='text-2xl'>Add Task Here</h1>
+                        <form onSubmit={handleSubmit} className='portal-form min-w-[355px] flex'>
+                            <input 
+                                type="text" 
+                                name="task"
+                                value={formData.task}
+                                onChange={handleChange}
+                                required
+                                placeholder='Task'
+                                className='form-control portal-input'
+                            />
+                            <input 
+                                type="number" 
+                                name="amount"
+                                step="0.10"
+                                value={formData.amount}
+                                onChange={handleChange}
+                                required
+                                placeholder='Amount(£)'
+                                className='form-control portal-input-amount'
+                            />
+                            <button type="submit" className=' rounded-md bg-slate-50 px-3 border hover:bg-[#40c6b8]'>Add Task</button>
+                        </form>
+                    </div>
+                    <div className='m-auto w-full rounded-lg my-2 p-1'>
+                        <h1 className='text-2xl'>Tasks</h1>
+                        
+                        {taskList()}
+                    </div>
+                </>}
         </div>
     )
 }

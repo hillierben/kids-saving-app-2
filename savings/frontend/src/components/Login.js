@@ -11,7 +11,7 @@ const Login = (props) => {
     password: "",
   })
   const navigate = useNavigate();
-  const{setToken, setUser} = useContext(TokenContext);
+  const{setToken, setUser, setRole, role} = useContext(TokenContext);
 
   // Update registerData whenever form data changes
   function handleChange(event) {
@@ -44,7 +44,12 @@ const Login = (props) => {
       localStorage.setItem("userName", jwt_decode(data.access).name)
       localStorage.setItem("userEmail", jwt_decode(data.access).email)
       localStorage.setItem("token", data.access)
-      navigate("/portal");
+      setRole(jwt_decode(data.access).role)
+      if(jwt_decode(data.access).role === "PARENT") {
+        navigate("/portal");
+      } else if(jwt_decode(data.access).role === "CHILD") {
+        navigate("/dashboard")
+      }
     } else {
       alert("Invalid Login")
       navigate("/login");
@@ -68,7 +73,7 @@ const Login = (props) => {
           <p>{props.loggedOut}</p>
           <h2>Login</h2>
           <input
-            placeholder="Email"
+            placeholder="Email/Username"
             className="rf-input rf-parent-name"
             type="text"
             id="email"

@@ -13,7 +13,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.parsers import JSONParser 
 
 from .serializers import UserSerializer, TaskSerializer
-from .models import User, Task
+from .models import User, Task, Child, Relationship
 
 # Create your views here.
 
@@ -35,6 +35,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # Add custom claims
         token['name'] = user.first_name
         token['email'] = user.email
+        token['role'] = user.role
         # ...
 
         return token
@@ -55,10 +56,43 @@ def registerParent(request):
 
         # Attempt to create new user
         try:
-            user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name, last_name=last_name)
+            user = User.objects.create_user(
+                username=username, 
+                email=email, 
+                password=password, 
+                first_name=first_name, 
+                last_name=last_name)
             user.save()
         except:
             pass
+
+    return Response("Successfully Registered")
+
+
+@api_view(["POST"])
+def registerChild(request):
+    if request.method == "POST":
+        username = request.data["username"]
+        firstName = request.data["firstName"]
+        lastName = request.data["lastName"]
+        password = request.data["password"]
+
+    try:
+        user = Child.objects.create_user(
+            username=username, 
+            email=f"{username}@gmail.com", 
+            password=password, 
+            first_name=firstName, 
+            last_name=lastName,
+        )
+        user.save()
+
+        child = Child.child.get(username=username)
+
+        Relationship.objects.create(parent=request.user, child=child)
+        
+    except:
+        pass
 
     return Response("Successfully Registered")
 
@@ -71,7 +105,8 @@ def login_view(request):
         email = request.data["email"]
         password = request.data["password"]
         user = authenticate(request, username=email, password=password)
-        name_object = User.objects.filter(email=user).values("first_name")
+        name_object = User.objects.filter(email=user).values("first_name", "role")
+
 
         try:
             name = list(name_object)[0]["first_name"]
@@ -111,24 +146,36 @@ def addTask(request):
 
     task = request.data["task"]
     amount = request.data["amount"]
+    child = request.data["child"]
+    child_user = Child.child.get(pk=child)
+    print(f"child id type {child_user}")
 
-    added_task = Task.objects.create(task=task, amount=amount, user=user_id)
+    added_task = Task.objects.create(
+        task=task, 
+        amount=amount, 
+        user=user_id, 
+        childUser=child_user)
     serializer = TaskSerializer(added_task, many=False)
 
     return Response(serializer.data)
 
 
-@api_view(["GET"])
+@api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
 def getTasks(request):
-    user = str(request.user) 
-    user_id = User.objects.get(email=user)
-    tasks = Task.objects.filter(user_id=user_id)
-    serializer = TaskSerializer(tasks, many=True)
+    try:
+        user = str(request.user) 
+        user_id = User.objects.get(email=user)
+        childID = request.data["childID"]
+        tasks = Task.objects.filter(childUser=childID)
+        serializer = TaskSerializer(tasks, many=True)
 
-    # Reverse the order of tasks, by time created
-    reversed = sorted(serializer.data, key=lambda x: x["created"], reverse=True)
-    return Response(reversed)
+        # Reverse the order of tasks, by time created
+        reversed = sorted(serializer.data, key=lambda x: x["created"], reverse=True)
+        print(reversed)
+        return Response(reversed)
+    except:
+        return Response("No Tasks")
 
 
 @api_view(["GET"])
@@ -154,14 +201,27 @@ def editTask(request, pk):
         return Response("Task Deleted")
     elif request.method == "PUT":
         updateTask = JSONParser().parse(request) 
-        print(updateTask)
         serializer = TaskSerializer(task, data=updateTask)
         if serializer.is_valid():
             serializer.save()
-            print("Task Updated")
-        else:
-            print("Not updated")
         return Response(serializer.data)
     # except:
     #     return Response("Task Does Not Exist")
 
+
+@api_view(["GET"])
+def getChildren(request):
+    if request.method == "GET":
+        user = str(request.user)
+        user_id = User.objects.get(email=user)
+        relations = Relationship.objects.filter(parent=user_id)
+
+        data = []
+        for r in relations:
+            child = Child.objects.get(username = r.child)
+            data.append({
+                "name": child.first_name, 
+                "id": child.id,
+            })
+        return Response(data)
+    return HttpResponse(404)

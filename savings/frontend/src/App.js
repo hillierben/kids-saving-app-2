@@ -11,25 +11,30 @@ import ErrorPage from './components/ErrorPage';
 import { BrowserRouter } from 'react-router-dom';
 import TokenContext from './contexts/Token';
 
+
 function App() {
   const[pageSelector, setPageSelector] = React.useState("login");
   const[page, setPage] = React.useState(<Login />);
   const[loggedOut, setLoggedOut] = React.useState("")
   const[token, setToken] = React.useState('')
   const[user, setUser] = React.useState()
+  const[role, setRole] = React.useState()
+  const[childId, setChildId] = React.useState();
+
 
   return (
-    <TokenContext.Provider value={{token, setToken, user, setUser}}>
+    <TokenContext.Provider value={{token, setToken, user, setUser, role, setRole, childId, setChildId}}>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Navbar 
+      <Navbar 
             handlePage={e => setPageSelector(e)}
-            setLoggedOut={e => setLoggedOut(e)}/>}>
+            setLoggedOut={e => setLoggedOut(e)}/>
+        <Routes>
+          
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login setPageSelector={e => setPageSelector(e)}/>} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/portal" element={<ParentPortal />} />
-          </Route>
+          
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>

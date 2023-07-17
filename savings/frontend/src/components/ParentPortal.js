@@ -3,22 +3,36 @@ import TokenContext from '../contexts/Token'
 import { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
 import Tasks from './Tasks'
-import Popup from './subComponents/Popup'
+import AddChild from './subComponents/AddChild'
+import ChildList from './subComponents/ChildList'
+import jwt_decode from "jwt-decode";
 
 
 const ParentPortal = () => {
-  const{user} = useContext(TokenContext)
+  const{user, token} = useContext(TokenContext)
   const[parentLogged] = React.useState(localStorage.getItem("userName"))
 
+
   return (
-    <div className='flex z-[-10] bg-gray-100 ml-[-25px] h-[52rem]'>
-      <div className=" ml-auto mr-auto mt-[110px] w-auto md:max-2xl:min-w-[600px] ">
-        { parentLogged === null ? <Navigate to="/login"/> : 
-        <div className='m-auto w-5/6 rounded-lg p-2 my-2'>
+    <div className='bg-slate-400'>
+      <div className='h-24 '></div>
+      { parentLogged === null ? <Navigate to="/login"/> : 
+        <div className=' w-full pl-[9%] pb-2 '>
           <h1>Hello, {parentLogged}!</h1> 
         </div>}
+      <div className='grid grid-cols-[repeat(auto-fill,minmax(100px,500px))] gap-2 pb-4  justify-center '>
         <div className=''>
-          { parentLogged === null ? <Navigate to="/login"/> : <Tasks/> }
+          <div className='m-2 shadow bg-white'>
+            <ChildList />
+          </div>
+        </div>
+        <div className='row-span-3'>
+          <div className='m-2  shadow bg-white'>
+            { parentLogged === null ? <Navigate to="/login"/> : <Tasks/> }
+          </div>
+        </div>
+        <div className=' m-2 row-span-2 shadow bg-white'>
+          <AddChild />
         </div>
       </div>
     </div>
