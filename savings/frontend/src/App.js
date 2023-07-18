@@ -31,7 +31,7 @@ function App() {
             handlePage={e => setPageSelector(e)}
             setLoggedOut={e => setLoggedOut(e)}/>
         <Routes>
-          
+              <Route path="/" element={<Login setPageSelector={e => setPageSelector(e)}/>} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login setPageSelector={e => setPageSelector(e)}/>} />
               <Route path="/dashboard" element={<Dashboard />} />
