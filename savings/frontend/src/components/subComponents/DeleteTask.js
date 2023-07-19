@@ -1,17 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
-import { Popconfirm } from 'antd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons'
 import Popup from './Popup';
 
 const DeleteTask = (props) => {
     const[deleteID, setDeleteID] = useState()
     const[isOpen, setIsOpen] = useState(false)
-
-    const POP_STYLE = {
-        backgroundColor: "red",
-    }
 
     let deleteTask = async () => {
         let taskDelete = deleteID
@@ -37,10 +32,11 @@ const DeleteTask = (props) => {
                 Are you sure you want to DELETE this task?
             </Popup>
             <FontAwesomeIcon 
-                icon={faTrash} 
-                className='icon-margin'
+                icon={faTrashCan}
+                className='icon-margin hover:cursor-pointer'
                 size="xl" 
                 name="delete" 
+                style={{color:"#ffdd00",}}
                 onClick={() => 
                     {setDeleteID(props.taskID);
                     setIsOpen(true)}}/>

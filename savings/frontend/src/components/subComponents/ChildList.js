@@ -5,6 +5,7 @@ import TokenContext from '../../contexts/Token';
 
 export default function ChildList() {
     const[children, setChildren] = useState();
+    const[selectedChild, setSelectedChild] = useState("")
 
     const{ childId, setChildId} = useContext(TokenContext)
 
@@ -30,12 +31,21 @@ export default function ChildList() {
 
     return (
         <div>
-        <h3>Children</h3>
-        <ul>
-            {children && children.map(child => (
-                <li key={child.id} onClick={() => setChildId(child.id)}>{child.name}</li>
-            ))}
-        </ul>
+            <div className='grid '>
+                <ul className='flex w-[320px] place-content-center ml-3'>
+                    {children && children.map(child => (
+                        <li className="mx-2 cursor-pointer text-[#000000ad]
+                                text-xl hover:text-slate-100 hover:underline" 
+                            key={child.id} onClick={() => {setChildId(child.id); localStorage.setItem("selectedChild", child.name)}}>{child.name}</li>
+                    ))}
+                </ul>
+                <div className='flex max-w-[120px] ml-10 place-self-center '>
+                    <p className="mx-2 cursor-pointer 
+                                text-4xl text-yellow-300 hover:underline " >
+                        {localStorage.getItem("selectedChild")}
+                    </p>
+                </div>
+            </div>
         </div>
     )
 }

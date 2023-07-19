@@ -4,7 +4,7 @@ import { Popconfirm } from 'antd'
 import { useContext } from 'react'
 import TokenContext from '../../contexts/Token'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquareCheck } from '@fortawesome/free-solid-svg-icons'
+import { faSquareCheck } from '@fortawesome/free-regular-svg-icons'
 import Popup from './Popup'
 
 
@@ -49,9 +49,9 @@ const CompleteTask = ({task, getTasks}) => {
             </Popup>
             <FontAwesomeIcon 
                 icon={faSquareCheck} 
-                className='icon-margin' 
+                className='icon-margin hover:cursor-pointer' 
                 size="xl"
-                style={{color: "#333333",}} 
+                style={{color:"#ffdd00",}}
                 onClick={()=>{setCompleteID(task.id); 
                     setComplete(!task.complete); 
                     setIsOpen(true)}} />

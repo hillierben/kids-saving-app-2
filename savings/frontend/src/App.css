@@ -1,9 +1,22 @@
+:root {
+  --teal: #22a699;
+  --purple: #c143a8;
+}
+
 * {
   font-family: 'Rowdies', cursive;
 }
 
 body {
-  background-color: linear-gradient(#CF9FFF, black);
+  background-color: linear-gradient(#e21717, black);
+}
+
+.background {
+  background: var(--teal);
+}
+
+html {
+  background: var(--teal);
 }
 
 .App {
@@ -146,7 +159,7 @@ body {
 .login-form {
     text-align: center;
     justify-content: center;
-    max-width: 900px;
+    max-width: 400px;
     height: 370px;
     margin-left: auto;
     margin-right: auto;
@@ -154,13 +167,17 @@ body {
     margin-top: 30px;
     top: 0px;
     border-radius: 1%;
+    border: solid white;
+    box-shadow: 3px 3px 11px;
+    background: #c143a8;
+    
 }
 
 .main-page {
   display: flex;
   position: absolute;
   width: 100vw;
-  height: 90vh;
+  height: 89%;
   top: 90px;
   z-index: -2;
   padding-left: 5%;
@@ -301,13 +318,13 @@ body {
   text-decoration: line-through;
 }
 
-.rf-child-input {
+/* .rf-child-input {
   height: auto;
   border-radius: 20px;
   margin: 10px;
   padding-bottom: 20px;
   max-width: 400px;
-}
+} */
 
 .rf-form {
     display: flex;
@@ -320,13 +337,31 @@ body {
     margin-left: auto;
     margin-right: auto;
     padding: 0px;
-    margin-top: 0px;
+    margin-top: 20px;
     top: 100px;
     border-radius: 1%;
+    
+}
+
+.rf-child-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: center;
+  max-width: 900px;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0px;
+  margin-top: 0px;
+  top: 100px;
+  border-radius: 1%;
 }
 
 .rf-input {
   width: 300px;
+  background: rgba(233, 233, 233, 0.97);
   height: 40px;
   margin-left: auto;
   margin-right: auto;
@@ -337,14 +372,31 @@ body {
   box-shadow: 2px 2px 2px rgb(66, 66, 66);
 }
 
+.rf-child-input {
+  width: 300px;
+  height: 35px;
+  margin-left: auto;
+  margin-right: auto;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 18px;
+  box-shadow: 2px 2px 2px rgb(66, 66, 66);
+}
+
+.rf-child-input > input {
+  padding-left: 10px;
+}
+
 .rf-parent-input {
-  background-color: #725bacb5;
+  background-color: #c143a8;
+  color: rgb(0, 0, 0);
   height: auto;
   max-width: 400px;
-  border-radius: 20px;
+  border-radius: 5px;
   margin: 10px;
+  padding-top: 10px;
   padding-bottom: 20px;
-  border: none;
+  border: solid white;
   box-shadow: 4px 4px 4px rgb(66, 66, 66);
 }
 
@@ -353,7 +405,7 @@ body {
   height: 40px;
   font-size: 25px;
   border-radius: 10px;
-  background-color: rgb(249, 249, 120);
+  background-color: rgb(253 224 71);
   margin-top: 10px;
   box-shadow: 2px 2px 2px rgb(66, 66, 66);
 }
@@ -497,4 +549,10 @@ transition: transform 0.5s;
   grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   justify-items: center;
   /* grid-template-columns: 1fr 1fr; */
+}
+
+.footer {
+  height: 100%;
+  background: red;
+  color:red;
 }

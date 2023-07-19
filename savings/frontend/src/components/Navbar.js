@@ -25,13 +25,15 @@ const Navbar = (props) => {
         localStorage.removeItem("userEmail")
         localStorage.removeItem("token")
         localStorage.removeItem("pageDisplay")
+        localStorage.removeItem("selectedChild")
+        localStorage.removeItem("totalSaved")
         alert("You have been logged out")
         return navigate("/login")
-  
+
     }
-    
+
     React.useEffect(() => {
-        
+
         // Hide or show Nav Links
         function handleResize() {
             if(window.innerWidth < 940) {
@@ -42,7 +44,7 @@ const Navbar = (props) => {
                 setMenuClick(false)
             }
         }
-        
+
         // Listen for window size change
         window.addEventListener("resize", handleResize);
         handleResize()
@@ -52,24 +54,27 @@ const Navbar = (props) => {
         setShowSidebar(showSidebar === "hide" ? "show" : "hide")
     }
 
+    // const mainPage = document.querySelector("side-bar")
+    // mainPage.addEventListener("click", () => setShowSidebar("hide"))
+
     return (
         <>
             <nav className="nav-bar">
-                <FontAwesomeIcon 
-                    icon={faBars} size="2xl" 
-                    className={hideLinks === "show" ? "icon-fa-bar-hidden" : 
-                        menuClick === false ? "icon-fa-bar" : "icon-fa-bar-open"} 
+                <FontAwesomeIcon
+                    icon={faBars} size="2xl"
+                    className={hideLinks === "show" ? "icon-fa-bar-hidden" :
+                        menuClick === false ? "icon-fa-bar" : "icon-fa-bar-open"}
                     onClick={() => {handleIconClick(); setMenuClick(!menuClick)}}
                     />
                 <h1 className={hideLinks ==="hide" ? "saving-logo-center" : "saving-logo"}>Saving Stars</h1>
-                <MenuListData 
+                <MenuListData
                     className={hideLinks=== "show" ? "nav-list" : "nav-list-hidden"}
                     handlePage={props.handlePage}
                     handleLogout={handleLogout}
                     />
             </nav>
-            <nav>
-                <Sidebar 
+            <nav className="side-bar">
+                <Sidebar
                     className={showSidebar === "show" ? "sidebar-div" : "sidebar-div-hidden"}
                     handlePage={props.handlePage}
                     handleClick={() => {handleIconClick(); setMenuClick(false)}}

@@ -71,7 +71,7 @@ const Login = (props) => {
     }
 
   return (
-    <div className="main-page">
+    <div className="main-page background">
     <form className="login-form" onSubmit={handleSubmit}>
       <div className="login-div">
           <p>{props.loggedOut}</p>

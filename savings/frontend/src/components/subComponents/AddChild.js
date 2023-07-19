@@ -10,8 +10,6 @@ export default function AddChild() {
         childConfirm: ""
     })
 
-    const navigate = useNavigate()
-
     function registerChild() {
         fetch('http://127.0.0.1:8000/api/register-child/', {
             method: "POST",
@@ -27,6 +25,8 @@ export default function AddChild() {
             })
         })
         window.location.reload()
+        localStorage.removeItem("selectedChild")
+        localStorage.removeItem("totalSaved")
 
     }
 
@@ -49,12 +49,11 @@ export default function AddChild() {
 
     return (
         <div className=''>
-            <h3 className='text-black mx-4 p-0' >Add Child</h3>
-            <form className='rf-form' onSubmit={handleSubmit}>
+            <form className='rf-child-form' onSubmit={handleSubmit}>
                 <div className="rf-child-input">
                     <input 
                     placeholder="First Name"
-                    className="rf-input rf-child-name"
+                    className="rf-child-input rf-child-name"
                     type="text"
                     id="child-first-name"
                     name="childFirstName"
@@ -63,7 +62,7 @@ export default function AddChild() {
                     required/>
                     <input 
                     placeholder="Last Name"
-                    className="rf-input rf-child-name"
+                    className="rf-child-input rf-child-name"
                     type="text"
                     id="child-last-name"
                     name="childLastName"
@@ -72,7 +71,7 @@ export default function AddChild() {
                     required/>
                     <input 
                     placeholder="Child Username"
-                    className="rf-input rf-child-username"
+                    className="rf-child-input rf-child-username"
                     type="text"
                     id="child-username"
                     name="childUsername"
@@ -81,7 +80,7 @@ export default function AddChild() {
                     required/>
                     <input 
                     placeholder="Child Password"
-                    className="rf-input rf-child-password"
+                    className="rf-child-input rf-child-password"
                     type="password"
                     id="child-password"
                     name="childPassword"
@@ -90,7 +89,7 @@ export default function AddChild() {
                     required/>
                     <input 
                     placeholder="Confirm Password"
-                    className="rf-input rf-child-confirm-password"
+                    className="rf-child-input rf-child-confirm-password"
                     type="password"
                     name="childConfirm"
                     onChange={handleChange}

@@ -50,9 +50,9 @@ const Register = (props) => {
   }
 
   return (
-    <div className="main-page">
-    <form className="rf-form" onSubmit={handleSubmit}>
-          <div className="rf-parent-input">
+    <div className="main-page background  ">
+    <form className="rf-form " onSubmit={handleSubmit}>
+          <div className="rf-parent-input  ">
             <h2 className="rf-parent-heading">Parent Sign Up</h2>
             <input 
               placeholder="First Name"
@@ -98,7 +98,7 @@ const Register = (props) => {
               value={formData.parentConfirm}
               onChange={handleChange}
               required/>
-            <button className='rf-submit'>Register</button>
+            <button className='rf-submit text-black'>Register</button>
           </div>      
     </form>
     </div>

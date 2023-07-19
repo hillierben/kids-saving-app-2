@@ -18,12 +18,13 @@ export default function TotalSaved() {
         })
         let data = await response.json()
         setTotalSaved(data.toFixed(2))
+        localStorage.setItem("totalSaved", data.toFixed(2))
     }
 
     let childTotalSaved = async() => {
         console.log(childId)
         if(!childId) {
-            setTotalSaved(0);
+            setTotalSaved("...");
             return 0;
         }
 
@@ -39,6 +40,7 @@ export default function TotalSaved() {
         })
         let data = await response.json()
         setTotalSaved(data.toFixed(2))
+        localStorage.setItem("totalSaved", data.toFixed(2))
     }
 
     useEffect(() => {
@@ -54,12 +56,12 @@ export default function TotalSaved() {
 
     return (
         <div className=''>
-        <div className=''>
-            {role === "CHILD" ? <h3 className=' text-4xl '>You have saved...</h3> :
-                <h3 className=' text-4xl '>Total saved...</h3>}
-        </div>
-        <div className='row-start-2 col-start-2 place-self-center '>
-                <h1 className='m-0 text-4xl'>£{totalSaved}</h1>
+            <div className='grid place-content-center'>
+                {localStorage.getItem("userProfile") === "CHILD" ? <h3 className=' text-2xl '>You have saved</h3> :
+                    <h3 className=' text-2xl text-amber-400 '>...has saved</h3>}
+            </div>
+            <div className='row-start-2 col-start-2 text-yellow-400 grid place-content-center'>
+                    <h1 className=' text-6xl'>£{localStorage.getItem("totalSaved")}</h1>
             </div>
         </div>
     )

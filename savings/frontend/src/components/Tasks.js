@@ -149,7 +149,7 @@ const Tasks = () => {
     const taskList = () => {
 
         return (
-            <ul className='portal-list max-h-[26rem] overflow-scroll shadow-sm min-w-[300px]'>
+            <ul className='portal-list max-h-[28rem] overflow-auto shadow-sm min-w-[300px] scrollbar scrollbar-thumb-[#c143a880] scrollbar-track-[#48193f77]'>
                 {tasks.map(task => (
                     <li key={task.id}  className='shadow-md bg-slate-50 mb-2 w-auto max-w-xl min-w-min rounded-lg flex group hover:bg-[#40c6b8]  '>
                         {Number(selectedTask) === Number(task.id) ? 
@@ -198,12 +198,13 @@ const Tasks = () => {
                                     <input className={task.complete ? "portal-strike py-2 px-2 rounded-md w-20 bg-slate-50" : "py-2 px-2 rounded-md w-20 bg-slate-50"} name="id" value={`£${task.amount}`} readOnly/>
                                 </div>
                             </div>
-                            <div className=' group-hover:flex  pt-[12px] hidden space-x-3 max-md:ml-[3%]  '>
-                                {Number(selectedTask) === Number(task.id) ? <p></p> : task.complete == false ?
+                            <div className=' group-hover:flex  pt-[1px] pb-2 hidden space-x-5 group-hover:ml-[105px] '>
+                                {Number(selectedTask) === Number(task.id) ? <p></p> : task.complete === false ?
                                     <FontAwesomeIcon 
                                         icon={faPenToSquare} 
-                                        className='icon-margin' 
+                                        className='icon-margin hover:cursor-pointer' 
                                         size="xl"
+                                        style={{color:"#ffdd00",}}
                                         onClick={() => {handleEditButton(task.id)}} value={task.id} name="edit" />
                                     : <p></p>}
                                 <DeleteTask token={token} taskID={task.id} getTasks={getTasks}/>
