@@ -17,11 +17,9 @@ Though there is not a hard requirement here, a README.md in the neighborhood of 
 
 ## Contents
 
-- [Aim of the website](#aim-of-the-website)
+- [Distinctiveness and Complexity](#distinctiveness-and-complexity)
 - [Installation](#installation)
 - [Running the application](#running-the-application)
-- [Key Objectives](#key-objectives)
-- [Inspiration](#inspiration)
 
 <br>
 
