@@ -4,12 +4,63 @@
 ## Contents
 
 - [Aim of the website](#aim-of-the-website)
-
+- [Installation](#installation)
+- [Running the application](#running-the-application)
 - [Key Objectives](#key-objectives)
-
 - [Inspiration](#inspiration)
 
 <br>
+
+
+# Installation
+
+Clone repository from GitHub
+```
+git clone https://github.com/hillierben/kids-saving-app-2.git
+
+```
+
+CD into savings and install Django dependencies 
+```
+cd /savings
+pip install -r requirements.txt
+```
+
+CD into frontend and install npm dependencies
+```
+cd /frontend
+npm install
+```
+
+# Running the application
+
+To run application, 2 ports are needed to run.
+- Port 8000 for Django REST API
+- Port 3000 for React interface
+
+Open terminal, 
+```
+cd /savings
+```
+Run
+```
+python3 manage.py runserver
+```
+
+In separate terminal,
+```
+cd /frontend
+```
+Run
+```
+npm start
+```
+
+In browser, visit http://localhost:3000/
+---
+
+
+
 
 # Distinctiveness and Complexity
 
