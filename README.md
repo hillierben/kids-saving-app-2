@@ -95,22 +95,43 @@ The app is built with Django and Django REST Framework on the backend, and React
 
 ### Backend
 
-- Django
-- Models creative
-- Django REST Framework
-- sqlite
+**Django**
+
+
+Django is used as an API, storing data about the users, tasks and parent-children relationships. The parent User model takes from AbstractUser, and a second Child user model is a proxy of User. Both these models have been amended to define a 'Role', which acts ensures both types of accounts are treated differently. 
+
+a Relationship model exits, which use Foreign Keys to link parent/child accounts. An instance is created when a parent creates a child account. A Task model exists, containing data of the task, amount and completed status(bool). It contains Foreign Keys for child/parent.
+
+Data is stored using SQLite. Django REST Framework is used to Serialize the data. JWT Token is used to authenticate the user when logging in, and calling data from the api. 
 
 
 ### Frontend
 
-- React
-- Mobile responsive
+**React**
+
+React framework was used on the frontend to display data, and create a pleasing UI, that is mobile responsive. This was a significant learning curve and a good deal of time was spent understanding how Javascript and React work. I also deepened my understanding of CSS, exploring Tailwind in various sections of my code. Key techniques employed include:
+- React-Router-Dom
+- Passing Props
+- useState / useEffect / useContent
+- fetch / async / await
+- Working with Events
 - State
+- Tailwind
+- CSS Grid / Flex
 
 
-### Key Techniques Learnt
 
 
-Using React Components and Props, pass a function(selectPage state) from App.js(parent) to Navbar.js(child). Each link in Navbar.js calls this function onCick, and passes the name of the page that should be displayed in App.js.
+
+
+
+
+
+
+
+
+
+
+
 
 
