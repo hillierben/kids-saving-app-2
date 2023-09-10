@@ -1,5 +1,7 @@
 # Final Project Ideas
 
+<a href="https://www.youtube.com/watch?v=QCqkPZuwhIU">Watch a demonstration of the app here</a>
+
 ## Contents
 
 - [Installation](#installation)
