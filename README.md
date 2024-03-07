@@ -93,9 +93,6 @@ The app is, currently, very basic. The child account has no functionality, other
 
 The app is built with Django and Django REST Framework on the backend, and React on the frontend. 
 
-- What’s contained in each file you created.
-- Any other additional information the staff should know about your project.
-
 
 ### Backend
 
